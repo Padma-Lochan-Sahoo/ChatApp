@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import { generateOTP, generateToken, sendOtpEmail } from "../lib/utils.js";
 import Otp from "../models/otp.model.js";
 import User from "../models/user.model.js";
@@ -178,3 +179,35 @@ export const logout = (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+//update profile pic
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
+    const userId = req.user._id;
+    if (!userId)
+      return res.status(500).json({ message: "Internal server error" });
+
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePic: uploadResponse.secure_url },
+      { new: true }
+    );
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log("Error in update Profile Picture", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const checkAuth = (req,res) => {
+    try {
+      return res.status(200).json(req.user)   
+    } catch (error) {
+      console.log(`Error in check Auth Controller ${error.message}`);
+      return res.status(500).json({ message: "Internal server Error"})
+    }
+}
