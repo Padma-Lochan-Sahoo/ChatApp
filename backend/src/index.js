@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import { connectDB } from './lib/db.js'
 
 dotenv.config()
 
@@ -12,9 +13,10 @@ app.use(cookieParser()) // allow you to parse the cookie
 
 // routes
 import authRoutes from "./routes/auth.route.js"
-import { connectDB } from './lib/db.js'
+import messageRoutes from "./routes/message.route.js"
 
 app.use("/api/auth",authRoutes);
+app.use("/api/message",messageRoutes);
 
 
 const PORT = process.env.PORT || 3000
