@@ -90,9 +90,17 @@ const ProfilePage = () => {
               />
               <label
                 htmlFor="avatar-upload"
+                aria-label="Upload profile picture"
                 className={`absolute bottom-0 right-0 bg-base-content p-2 rounded-full cursor-pointer transition-transform duration-200 hover:scale-105 ${
                   isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
                 }`}
+                tabIndex={0} // Makes label focusable by keyboard
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    document.getElementById("avatar-upload").click();
+                  }
+                }}
               >
                 <Camera className="w-5 h-5 text-base-200" />
                 <input
@@ -111,7 +119,9 @@ const ProfilePage = () => {
                 <button
                   onClick={handleSave}
                   disabled={isUpdatingProfile}
+                  aria-label="Save profile changes"
                   className="btn btn-sm btn-primary rounded-full flex items-center gap-1 transition-all duration-300 hover:scale-105"
+                  
                 >
                   <Check className="w-4 h-4" />
                   Save
@@ -119,6 +129,7 @@ const ProfilePage = () => {
                 <button
                   onClick={handleCancel}
                   disabled={isUpdatingProfile}
+                  aria-label="Cancel profile changes"
                   className="btn btn-sm btn-ghost border rounded-full flex items-center gap-1 transition-all duration-300 hover:scale-105"
                 >
                   <X className="w-4 h-4" />
