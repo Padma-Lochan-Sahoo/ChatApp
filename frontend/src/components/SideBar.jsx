@@ -45,7 +45,6 @@ const Sidebar = () => {
           </span>
         </div>
       </div>
-
       {/* User List */}
       <div className="overflow-y-auto w-full py-3">
         {filteredUsers.length > 0 ? (
