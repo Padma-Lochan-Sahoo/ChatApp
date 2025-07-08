@@ -31,6 +31,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal server error" });
 });
 
+app.get('/',(req,res)=>{
+    res.send('Server is running')
+})
+
 // ✅ Start Server
 const PORT = process.env.PORT || 3000;
 
