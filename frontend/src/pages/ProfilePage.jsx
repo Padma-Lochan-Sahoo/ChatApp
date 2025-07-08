@@ -53,40 +53,40 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen pt-20 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-base-300 rounded-xl p-6 space-y-8 shadow-lg">
+      <div className="max-w-5xl mx-auto space-y-8">
+                <div className="bg-base-300 rounded-xl p-6 shadow-lg space-y-10">
+        {/* 🔙 Navigation */}
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium text-primary border border-primary hover:bg-primary hover:text-primary-content transition-all duration-300"
+          >
+            <ArrowLeftCircle className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+            <span>Back</span>
+          </button>
+          <button
+            onClick={() => navigate("/")}
+            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium text-primary border border-primary hover:bg-primary hover:text-primary-content transition-all duration-300"
+          >
+            <ArrowRightCircle className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <span>Chat</span>
+          </button>
+        </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-between mb-4">
-            <button
-              onClick={() => navigate(-1)}
-              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium text-primary border border-primary hover:bg-primary hover:text-primary-content transition-all duration-300"
-            >
-              <ArrowLeftCircle className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              <span>Back</span>
-            </button>
-            <button
-              onClick={() => navigate("/")}
-              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium text-primary border border-primary hover:bg-primary hover:text-primary-content transition-all duration-300"
-            >
-              <ArrowRightCircle className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              <span>Chat</span>
-            </button>
-          </div>
+
 
           {/* Header */}
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold">Profile</h1>
-            <p className="mt-2 text-sm text-base-content/70">Your profile information</p>
-          </div>
-
-          {/* Avatar Section */}
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-primary">Profile</h1>
+          <p className="mt-2 text-sm text-base-content/70">Update Your Profile</p>
+        </div>
+          {/* Avatar */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
                 src={previewImg || selectedImg || "/avatar.png"}
                 alt="Profile"
-                className="size-32 rounded-full object-cover border-4 border-base-content/10 transition-all duration-300"
+                className="size-32 rounded-full object-cover border-4 border-primary transition-all duration-300"
               />
               <label
                 htmlFor="avatar-upload"
@@ -136,7 +136,7 @@ const ProfilePage = () => {
             </p>
           </div>
 
-          {/* Form Fields */}
+          {/* Input Fields */}
           <div className="space-y-6">
             <div className="space-y-1.5">
               <label className="text-sm text-zinc-400 flex items-center gap-2">
@@ -173,8 +173,8 @@ const ProfilePage = () => {
           </div>
 
           {/* Account Info */}
-          <div className="mt-6 bg-base-200 rounded-xl p-6">
-            <h2 className="text-lg font-medium mb-4">Account Information</h2>
+          <div className="bg-base-200 rounded-xl p-6">
+            <h2 className="text-lg font-medium mb-4 text-primary">Account Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
                 <span>Member Since</span>
@@ -186,8 +186,8 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
   );

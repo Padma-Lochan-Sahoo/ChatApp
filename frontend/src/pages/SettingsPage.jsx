@@ -21,10 +21,10 @@ const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
 
   return (
-    <div className="h-screen overflow-y-auto pt-20 px-4 sm:px-6 md:px-8">
-      <div className="max-w-5xl mx-auto space-y-8 pb-20">
-
-        {/* 🔙 Navigation Buttons */}
+    <div className="min-h-screen pt-20 px-4">
+      <div className="max-w-5xl mx-auto space-y-8">
+<div className="bg-base-300 rounded-xl p-6 shadow-lg space-y-10">
+        {/* 🔙 Navigation */}
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => navigate(-1)}
@@ -42,12 +42,10 @@ const SettingsPage = () => {
           </button>
         </div>
 
-        {/* Heading */}
-        <div className="space-y-1">
-          <h2 className="text-xl font-semibold">Theme</h2>
-          <p className="text-sm text-base-content/70">
-            Choose a theme for your chat interface
-          </p>
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-primary">Theme</h1>
+          <p className="mt-2 text-sm text-base-content/70">Choose a theme for your chat interface</p>
         </div>
 
         {/* Theme Grid */}
@@ -56,10 +54,10 @@ const SettingsPage = () => {
             <button
               key={t}
               onClick={() => setTheme(t)}
-              className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors
-              ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"}`}
+              className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors border border-transparent hover:border-base-300
+              ${theme === t ? "bg-base-200 border border-base-content/20" : "hover:bg-base-200/50"}`}
             >
-              {/* Theme preview */}
+              {/* Theme Preview Box */}
               <div className="relative h-8 w-full rounded-md overflow-hidden" data-theme={t}>
                 <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
                   <div className="rounded bg-primary"></div>
@@ -69,11 +67,16 @@ const SettingsPage = () => {
                 </div>
               </div>
 
-              {/* Theme name + selected indicator */}
-              <div className="relative w-full flex justify-center items-center">
-                <span className="text-[11px] font-medium truncate">{t.charAt(0).toUpperCase() + t.slice(1)}</span>
+              {/* Theme Name + Active Indicator */}
+              <div className="relative w-full flex justify-center items-center gap-1">
+                <span className="text-[11px] font-medium truncate">
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </span>
                 {theme === t && (
-                  <span className="ml-1 w-2.5 h-2.5 bg-success rounded-full border border-white shadow-sm animate-pulse" />
+                  <span
+                    className="w-2.5 h-2.5 bg-success rounded-full border border-white shadow-sm animate-pulse"
+                    title="Active Theme"
+                  />
                 )}
               </div>
             </button>
@@ -81,12 +84,11 @@ const SettingsPage = () => {
         </div>
 
         {/* Preview Section */}
-        <h3 className="text-xl font-semibold">Preview</h3>
-        <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow">
-          <div className="p-4 bg-base-200">
-            <div className="max-w-lg mx-auto">
-              <div className="bg-base-100 rounded-xl shadow-sm overflow-hidden">
-                
+        <div>
+          <h2 className="text-xl font-semibold">Preview</h2>
+          <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow">
+            <div className="p-4 bg-base-200">
+              <div className="max-w-lg mx-auto bg-base-100 rounded-xl shadow-sm overflow-hidden">
                 {/* Chat Header */}
                 <div className="px-4 py-3 border-b border-base-300 bg-base-100">
                   <div className="flex items-center gap-3">
@@ -145,7 +147,7 @@ const SettingsPage = () => {
             </div>
           </div>
         </div>
-
+</div>
       </div>
     </div>
   );
