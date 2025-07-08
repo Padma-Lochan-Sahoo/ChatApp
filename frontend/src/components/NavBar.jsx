@@ -1,23 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { LogOut, MessageSquare, Settings, Sun, Moon, User } from "lucide-react";
-import { useEffect, useState } from "react";
+import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { logout, authUser } = useAuthStore();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const handleLogout = async () => {
+    const success = await logout();
+    if(success){
+      navigate("/login");
+    }
   };
 
   return (
-    <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/70 shadow-md">
+    <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/70 shadow-md transition-colors duration-300">
       <div className="container mx-auto px-4 h-16">
         <div className="flex items-center justify-between h-full">
 
@@ -31,21 +28,6 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-2">
-
-            {/* Theme toggle */}
-            {/* Theme toggle switch */}
-<label className="swap swap-rotate btn btn-ghost btn-sm px-2">
-  <input
-    type="checkbox"
-    onChange={toggleTheme}
-    checked={theme === "dark"}
-  />
-  <Sun className="swap-on fill-current w-5 h-5 text-yellow-400" />
-  <Moon className="swap-off fill-current w-5 h-5 text-blue-500" />
-</label>
-
-
-
 
 
             <Link to="/settings" className="btn btn-ghost btn-sm gap-2">
@@ -61,7 +43,8 @@ const Navbar = () => {
                 </Link>
 
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
+                  type="button"
                   className="btn btn-outline btn-sm text-error border-error hover:bg-error hover:text-white gap-2"
                 >
                   <LogOut className="w-4 h-4" />

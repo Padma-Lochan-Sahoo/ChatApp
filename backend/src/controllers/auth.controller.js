@@ -184,24 +184,29 @@ export const logout = (req, res) => {
 //update profile pic
 export const updateProfile = async (req, res) => {
   try {
-    const { profilePic } = req.body;
+    const { profilePic, fullName, bio } = req.body;
     const userId = req.user._id;
-    if (!userId)
-      return res.status(500).json({ message: "Internal server error" });
+    if (!userId) return res.status(500).json({ message: "Internal server error" });
 
+    const updateData = {};
 
-    const uploadResponse = await cloudinary.uploader.upload(profilePic);
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { profilePic: uploadResponse.secure_url },
-      { new: true }
-    );
+    if (profilePic) {
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      updateData.profilePic = uploadResponse.secure_url;
+    }
+
+    if (fullName) updateData.fullName = fullName;
+    if (bio !== undefined) updateData.bio = bio;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
     return res.status(200).json(updatedUser);
   } catch (error) {
-    console.log("Error in update Profile Picture", error);
+    console.log("Error in updateProfile:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 export const checkAuth = (req,res) => {
     try {

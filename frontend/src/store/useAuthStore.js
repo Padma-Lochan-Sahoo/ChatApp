@@ -1,65 +1,68 @@
-import { create } from 'zustand'
-import { axiosInstance } from '../lib/axios.js'
-import toast from 'react-hot-toast';
+import { create } from "zustand";
+import { axiosInstance } from "../lib/axios.js";
+import toast from "react-hot-toast";
 
-export const useAuthStore = create( (set) => ({
-    authUser: null,
-    isSigningUp: false,
-    isLoggingIn: false,
-    isUpdatingProfile: false,
 
-    isCheckingAuth: true,
+export const useAuthStore = create((set) => ({
+  authUser: null,
+  isSigningUp: false,
+  isLoggingIn: false,
+  isUpdatingProfile: false,
 
-    isVerifyingOtp: false,
-    otpStep: false,
+  isCheckingAuth: true,
 
-    checkAuth: async () => {
-        try {
-            const res = await axiosInstance.get("/auth/check");
-            set({ authUser: res.data})
-        } catch (error) {
-            console.log("Error in checkAuth: ",error);
-            set({ authUser: null});
-        } finally {
-            set({ isCheckingAuth: false})
-        }
-    },
+  isVerifyingOtp: false,
+  otpStep: false,
 
-    signup: async (data) => {
-        set({ isSigningUp: true });
-        try {
-            await axiosInstance.post("/auth/signup", data);
-            toast.success("OTP sent to your email");
-            set({ otpStep: true, signupEmail: data.email });
-        } catch (error) {
-            toast.error(error?.response?.data?.message || "Signup failed");
-        } finally {
-            set({ isSigningUp: false });
-        }
-    },
+  checkAuth: async () => {
+    try {
+      const res = await axiosInstance.get("/auth/check");
+      set({ authUser: res.data });
+    } catch (error) {
+      console.log("Error in checkAuth: ", error);
+      set({ authUser: null });
+    } finally {
+      set({ isCheckingAuth: false });
+    }
+  },
 
-    verifyOtp: async (email, otp) => {
-        set({ isVerifyingOtp: true });
-        try {
-            const res = await axiosInstance.post("/auth/verify-otp", { email, otp });
-            set({ authUser: res.data, otpStep: false });
-            toast.success("Signup successful!");
-            return true;
-        } catch (error) {
-            toast.error(error?.response?.data?.message || "OTP verification failed");
-            return false;
-        } finally {
-            set({ isVerifyingOtp: false });
-        }
-    },
+  signup: async (data) => {
+    set({ isSigningUp: true });
+    try {
+      await axiosInstance.post("/auth/signup", data);
+      toast.success("OTP sent to your email");
+      set({ otpStep: true, signupEmail: data.email });
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Signup failed");
+    } finally {
+      set({ isSigningUp: false });
+    }
+  },
 
-    login: async (data) => {
+  verifyOtp: async (email, otp) => {
+    set({ isVerifyingOtp: true });
+    try {
+      const res = await axiosInstance.post("/auth/verify-otp", { email, otp });
+      set({ authUser: res.data, otpStep: false });
+      toast.success("Signup successful!");
+      return true;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "OTP verification failed");
+      return false;
+    } finally {
+      set({ isVerifyingOtp: false });
+    }
+  },
+
+  login: async (data) => {
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      set({ authUser: res.data });
+      const userRes = await axiosInstance.get("/auth/check");
+
+      set({ authUser: userRes.data });
       toast.success("Logged in successfully");
-        return true;
+      return true;
     } catch (error) {
       toast.error(error.response.data.message);
       return false;
@@ -68,13 +71,38 @@ export const useAuthStore = create( (set) => ({
     }
   },
 
-    logout: async () => {
-        try {
-            await axiosInstance.post("/auth/logout");
-            set({ authUser: null });
-            toast.success("Logged out successfully");
-        } catch (error) {
-            toast.error(error?.response?.data?.message || "Logout failed");
-        }
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logged out successfully");
+      return true;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Logout failed");
+      return false;
     }
-}))
+  },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.post("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("error in update profile:", error);
+      const msg =
+        error.response?.status === 413
+          ? "Image too large. Please upload a smaller image."
+          : error.response?.data?.message || "Failed to update profile";
+      toast.error(msg);
+      //   const msg =
+      //     error.response?.data?.message || error.response?.status === 413
+      //       ? "Image too large. Please upload a smaller image."
+      //       : "Failed to update profile";
+      //   toast.error(msg);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  },
+}));

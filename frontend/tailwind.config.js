@@ -1,7 +1,8 @@
 import daisyui from 'daisyui'
+
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: [
+  content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
@@ -10,37 +11,65 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    
     themes: [
-    "light",
-    "dark",
+        "light",
+  "dark",
+  "cupcake",
+  "bumblebee",
+  "emerald",
+  "corporate",
+  "synthwave",
+  "retro",
+  "cyberpunk",
+  "valentine",
+  "halloween",
+  "garden",
+  "forest",
+  "aqua",
+  "lofi",
+  "pastel",
+  "fantasy",
+  "wireframe",
+  "black",
+  "luxury",
+  "dracula",
+  "cmyk",
+  "autumn",
+  "business",
+  "acid",
+  "lemonade",
+  "night",
+  "coffee",
+  "winter",
+  "dim",
+  "nord",
+  "sunset",
       {
         convoflow: {
-          "primary": "#3b82f6",          // Blue
-          "primary-focus": "#2563eb",
+          "primary": "#2563eb",          // Deep Blue - elegant action color
+          "primary-focus": "#1d4ed8",
           "primary-content": "#ffffff",
 
-          "secondary": "#14b8a6",        // Teal
+          "secondary": "#0d9488",        // Muted Teal - less neon, more mature
           "secondary-content": "#ffffff",
 
-          "accent": "#a855f7",           // Violet
+          "accent": "#9333ea",           // Rich Violet - balanced vibrancy
           "accent-content": "#ffffff",
 
-          "neutral": "#1e293b",          // Slate
+          "neutral": "#1e293b",          // Slate - perfect for dark base
           "neutral-content": "#f1f5f9",
 
-          "base-100": "#0f172a",         // Deep dark background
-          "base-200": "#1e293b",         // Surface color
-          "base-content": "#e2e8f0",     // Light text
+          "base-100": "#0f172a",         // Deep navy background
+          "base-200": "#1c2434",         // Slightly lighter for containers
+          "base-content": "#f1f5f9",     // Brighter text for readability
 
-          "info": "#0ea5e9",
-          "success": "#10b981",
-          "warning": "#f59e0b",
-          "error": "#ef4444",
+          "info": "#0ea5e9",             // Cyan
+          "success": "#10b981",          // Emerald
+          "warning": "#f59e0b",          // Amber
+          "error": "#ef4444",            // Red
         },
       },
-      "dark" // fallback
+      "dark", // fallback
     ],
   },
 }
-

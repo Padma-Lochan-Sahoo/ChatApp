@@ -74,12 +74,14 @@ const SignUpPage = () => {
                   </div>
                   <input
                     type="text"
+                    name="fullName"
                     className="input input-bordered w-full pl-10 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
                     placeholder="Enter your full name"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     aria-label="Full Name"
                     autoFocus
+                    autoComplete='name'
                   />
                 </div>
               </div>
@@ -94,10 +96,12 @@ const SignUpPage = () => {
                   </div>
                   <input
                     type="email"
+                    name="email"
                     className="input input-bordered w-full pl-10 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    autoComplete='email'
                   />
                 </div>
               </div>
@@ -113,7 +117,7 @@ const SignUpPage = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     className="input input-bordered w-full pl-10 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
-                    placeholder="************"
+                    placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   />
