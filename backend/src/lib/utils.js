@@ -32,7 +32,33 @@ export const sendOtpEmail = async (email, otp) => {
     from: process.env.EMAIL_USER,
     to: email,
     subject: "Your OTP Code",
-    text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
+    html: `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; background-color: #f9f9f9;">
+      <h2 style="text-align: center; color: #333;">🔐 Email Verification</h2>
+      <p style="font-size: 16px; color: #555;">Hello,</p>
+      <p style="font-size: 16px; color: #555;">
+        You requested to verify your email address. Please use the OTP code below:
+      </p>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <span style="display: inline-block; background-color: #e0f2fe; color: #0c4a6e; font-size: 24px; font-weight: bold; padding: 12px 24px; border-radius: 8px; letter-spacing: 2px;">
+          ${otp}
+        </span>
+      </div>
+
+      <p style="font-size: 15px; color: #666;">
+        This OTP is valid for <strong>5 minutes</strong>. Please do not share it with anyone.
+      </p>
+
+      <p style="font-size: 14px; color: #999;">If you didn't request this, you can safely ignore this email.</p>
+
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;" />
+
+      <p style="font-size: 12px; text-align: center; color: #aaa;">
+        &copy; ${new Date().getFullYear()} ConvoFlow. All rights reserved.
+      </p>
+    </div>
+  `
   };
 
   await transporter.sendMail(mailOptions);
