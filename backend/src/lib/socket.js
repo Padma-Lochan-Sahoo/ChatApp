@@ -15,10 +15,14 @@ export function getReceiverSocketId(userId) {
 // ✅ Create socket server instance
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",                         // local dev
+      "https://convo-flow-frontend.vercel.app"         // production Vercel frontend
+    ],
     credentials: true,
   },
 });
+
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
